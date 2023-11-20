@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.docker</groupId>
 	<artifactId>docker-java-image</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>docker-java-image</name>
 	<description>Demo project for docker with github actions</description>
 	<properties>
