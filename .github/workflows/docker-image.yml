@@ -44,8 +44,8 @@ jobs:
       env:
         NEW_VERSION: ${{steps.version.outputs.version}}
       run: |
-        docker push -t tecnoin19/docker-java-image:$NEW_VERSION
-        docker push -t tecnoin19/docker-java-image:latest
+        docker push tecnoin19/docker-java-image:$NEW_VERSION
+        docker push tecnoin19/docker-java-image:latest
 
         
       
