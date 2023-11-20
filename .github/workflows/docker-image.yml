@@ -38,7 +38,7 @@ jobs:
         NEW_VERSION: ${{steps.version.outputs.version}}
       run: |
         docker run -t tecnoin19/docker-java-image:$NEW_VERSION .
-        docker run -t tecnoin19/docer-java-image:latest .
+        docker run -t tecnoin19/docker-java-image:latest .
     
     - name: Push java Docker image
       env:
