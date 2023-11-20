@@ -1,0 +1,53 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Code checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0 
+        
+    - name: Git Semantic Version
+      uses: PaulHatch/semantic-version@v4.0.3
+      with:
+        major_pattern: "major:"
+        minor_pattern: "feat:"
+        format: "${major}.${minor}.${patch}-prerelease${increment}"
+      id: version
+      
+    - name: Docker login
+      env: 
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_TOKEN}}
+      run: |
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+
+    - name: Build java Docer image
+      env:
+        NEW_VERSION: ${{steps.version.outputs.version}}
+      run: |
+        docker run -t tecnoin19/docker-java-image:$NEW_VERSION .
+        docker run -t tecnoin19/docer-java-image:latest .
+    
+    - name: Push java Docker image
+      env:
+        NEW_VERSION: ${{steps.version.outputs.version}}
+      run: |
+        docker push -t tecnoin19/docker-java-image:$NEW_VERSION
+        docker push -t tecnoin19/docker-java-image:latest
+
+        
+      
+    
+
